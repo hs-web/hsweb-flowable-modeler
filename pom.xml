@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.hswebframework.web</groupId>
+    <artifactId>hsweb-flowable-modeler</artifactId>
+    <version>3.0-SNAPSHOT</version>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.build.locales>zh_CN</project.build.locales>
+
+        <java.version>1.8</java.version>
+        <project.build.jdk>${java.version}</project.build.jdk>
+
+
+        <spring.boot.version>1.4.5.RELEASE</spring.boot.version>
+
+        <javassist.version>3.20.0-GA</javassist.version>
+        <activiti.version>5.19.0.2</activiti.version>
+
+        <fastjson.version>1.2.32</fastjson.version>
+        <h2.version>1.4.191</h2.version>
+        <mysql.version>5.1.39</mysql.version>
+        <cglib.version>3.2.2</cglib.version>
+        <aspectj.version>1.6.12</aspectj.version>
+        <hibernate.validator.version>5.1.1.Final</hibernate.validator.version>
+
+        <hsweb.ezorm.version>3.0.0-SNAPSHOT</hsweb.ezorm.version>
+        <hsweb.utils.version>3.0.0-SNAPSHOT</hsweb.utils.version>
+        <hsweb.expands.version>3.0.0-SNAPSHOT</hsweb.expands.version>
+
+        <swagger.version>2.6.1</swagger.version>
+
+        <batik.version>1.7</batik.version>
+        <flowable.version>5.23.0</flowable.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.1.7</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.flowable</groupId>
+            <artifactId>flowable-spring-boot-starter-basic</artifactId>
+            <version>${flowable.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <version>${spring.boot.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.flowable</groupId>
+            <artifactId>flowable-json-converter</artifactId>
+            <version>${flowable.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.flowable</groupId>
+            <artifactId>flowable-bpmn-converter</artifactId>
+            <version>${flowable.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.flowable</groupId>
+            <artifactId>flowable-explorer</artifactId>
+            <version>${flowable.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>vaadin</artifactId>
+                    <groupId>com.vaadin</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>dcharts-widget</artifactId>
+                    <groupId>org.vaadin.addons</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>slf4j-log4j12</artifactId>
+                    <groupId>org.slf4j</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.flowable</groupId>
+            <artifactId>flowable-simple-workflow</artifactId>
+            <version>${flowable.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>${h2.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+            <version>1.0.26</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+            <version>3.0</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-scm-plugin</artifactId>
+                <version>1.8.1</version>
+                <configuration>
+                    <connectionType>connection</connectionType>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>2.4</version>
+                <configuration>
+                    <attach>true</attach>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.9.1</version>
+                <configuration>
+                    <aggregate>true</aggregate>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>deploy</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
+                <configuration>
+                    <source>${project.build.jdk}</source>
+                    <target>${project.build.jdk}</target>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.17</version>
+                <configuration>
+                    <includes>
+                        <include>
+                            **/org/hswebframework/**/*Tests.java
+                        </include>
+                    </includes>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    <repositories>
+        <repository>
+            <id>hsweb-nexus</id>
+            <name>Nexus Release Repository</name>
+            <url>http://nexus.hsweb.me/content/groups/public/</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>aliyun-nexus</id>
+            <name>aliyun</name>
+            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+        </repository>
+    </repositories>
+    <distributionManagement>
+        <repository>
+            <id>releases</id>
+            <name>Nexus Release Repository</name>
+            <url>http://nexus.hsweb.me/content/repositories/releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>snapshots</id>
+            <name>Nexus Snapshot Repository</name>
+            <url>http://nexus.hsweb.me/content/repositories/snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>hsweb-nexus</id>
+            <name>Nexus Release Repository</name>
+            <url>http://nexus.hsweb.me/content/groups/public/</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </pluginRepository>
+        <pluginRepository>
+            <id>aliyun-nexus</id>
+            <name>aliyun</name>
+            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+        </pluginRepository>
+    </pluginRepositories>
+</project>
