@@ -25,10 +25,10 @@ KISBPM.URL = {
     },
 
     getStencilSet: function() {
-        return ACTIVITI.CONFIG.contextRoot + '/stencilset';
+        return ACTIVITI.CONFIG.contextRoot + '/stencilset.json';
     },
 
     putModel: function(modelId) {
-        return ACTIVITI.CONFIG.contextRoot + '/model/' + modelId + '/save';
+        return ACTIVITI.CONFIG.contextRoot + '/model/' + modelId;
     }
 };
